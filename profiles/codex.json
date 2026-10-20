@@ -1,0 +1,23 @@
+{
+  "id": "codex",
+  "displayName": "OpenAI Codex",
+  "profileVersion": "2026.10.1",
+  "verifiedAt": "2026-10-19",
+  "sources": ["https://learn.chatgpt.com/docs/build-skills.md"],
+  "install": {
+    "project": ".agents/skills",
+    "user": "~/.agents/skills"
+  },
+  "frontmatter": {
+    "required": ["name", "description"],
+    "supported": ["name", "description", "license", "compatibility", "metadata"]
+  },
+  "limits": { "descriptionChars": 1024, "skillMdLines": 500 },
+  "invoke": "Codex picks it automatically when the task matches the description, or type ${name} / run /skills.",
+  "mcp": {
+    "how": "Declare the server in agents/openai.yaml (generated) and add it to ~/.codex/config.toml.",
+    "snippet": "[mcp_servers.{server}]\nurl = \"{url}\""
+  },
+  "runtimes": ["python3", "node", "bash"],
+  "extraFiles": ["agents/openai.yaml"]
+}

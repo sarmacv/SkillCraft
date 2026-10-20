@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SkillCraft project",
+  "type": "object",
+  "required": ["name", "version", "skillPath", "language", "targets", "buildMode"],
+  "properties": {
+    "name": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$", "maxLength": 64, "description": "Skill name. Must match the skill folder name." },
+    "version": { "type": "string", "description": "Your skill's version, shown in the generated README." },
+    "skillPath": { "type": "string", "description": "Folder holding the skill source, relative to this file." },
+    "language": { "enum": ["python", "node", "bash"], "description": "Language for generated scripts." },
+    "targets": { "type": "array", "items": { "enum": ["claude", "codex", "copilot"] }, "minItems": 1, "uniqueItems": true, "description": "Tools to build for." },
+    "buildMode": { "enum": ["tailored", "universal"], "description": "tailored: one optimized build per tool. universal: one build that works everywhere." },
+    "overrides": {
+      "type": "object",
+      "description": "Per-tool customizations.",
+      "propertyNames": { "enum": ["claude", "codex", "copilot"] },
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "description": { "type": "string", "maxLength": 1024 },
+          "extraInstructions": { "type": "string", "description": "Markdown appended to SKILL.md for this tool only." },
+          "frontmatter": { "type": "object", "description": "Extra frontmatter fields for this tool." }
+        },
+        "additionalProperties": false
+      }
+    },
+    "rejected": {
+      "type": "array",
+      "description": "Suggestions you rejected; SkillCraft won't make them again.",
+      "items": { "type": "object", "required": ["key"], "properties": { "key": { "type": "string" }, "reason": { "type": "string" } } }
+    }
+  }
+}

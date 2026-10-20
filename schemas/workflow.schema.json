@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SkillCraft workflow",
+  "type": "object",
+  "required": ["version", "nodes", "edges"],
+  "properties": {
+    "version": { "const": 1 },
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "label", "config", "position"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "type": "string", "description": "Component id, e.g. source.rest, module.ai, output.message, or placeholder.<category>." },
+          "label": { "type": "string" },
+          "config": { "type": "object" },
+          "position": { "type": "object", "required": ["x", "y"], "properties": { "x": { "type": "number" }, "y": { "type": "number" } } },
+          "excludeTargets": { "type": "array", "items": { "enum": ["claude", "codex", "copilot"] } },
+          "targetOverrides": { "type": "object" },
+          "customCode": { "type": "boolean", "description": "You own the generated file; SkillCraft won't regenerate it." },
+          "inferred": { "type": "object" }
+        }
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": { "type": "object", "required": ["id", "source", "target"], "properties": { "id": { "type": "string" }, "source": { "type": "string" }, "target": { "type": "string" } } }
+    }
+  }
+}

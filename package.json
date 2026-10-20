@@ -1,0 +1,382 @@
+{
+  "name": "skillcraft",
+  "displayName": "SkillCraft",
+  "description": "Design, orchestrate, test and ship Agent Skills for Claude, Codex and Copilot — with a visual workflow canvas, an AI coach and best-practice guidance.",
+  "version": "0.1.0",
+  "publisher": "skillcraft",
+  "license": "UNLICENSED",
+  "icon": "media/icon.png",
+  "galleryBanner": {
+    "color": "#04342C",
+    "theme": "dark"
+  },
+  "engines": {
+    "vscode": "^1.95.0"
+  },
+  "categories": [
+    "AI",
+    "Chat",
+    "Visualization",
+    "Linters"
+  ],
+  "keywords": [
+    "agent skills",
+    "SKILL.md",
+    "claude",
+    "codex",
+    "copilot",
+    "mcp",
+    "workflow"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "skillcraft",
+          "title": "SkillCraft",
+          "icon": "media/activity.svg"
+        }
+      ]
+    },
+    "views": {
+      "skillcraft": [
+        {
+          "id": "skillcraft.skills",
+          "name": "Skills"
+        },
+        {
+          "id": "skillcraft.health",
+          "name": "Health"
+        },
+        {
+          "id": "skillcraft.proposals",
+          "name": "Proposals"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "skillcraft.skills",
+        "contents": "Build an Agent Skill for Claude, Codex or Copilot.\n[Describe your skill](command:skillcraft.describe)\n[Sketch a workflow](command:skillcraft.sketch)\n[Start from a template](command:skillcraft.fromTemplate)\n[Import an existing skill](command:skillcraft.importSkill)\nSkillCraft never changes your files on its own — every change is a proposal you review first.",
+        "when": "!skillcraft.hasProject"
+      }
+    ],
+    "commands": [
+      {
+        "command": "skillcraft.describe",
+        "title": "Describe Your Skill",
+        "category": "SkillCraft",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "skillcraft.sketch",
+        "title": "Sketch a Workflow",
+        "category": "SkillCraft",
+        "icon": "$(type-hierarchy)"
+      },
+      {
+        "command": "skillcraft.fromTemplate",
+        "title": "Start from a Template",
+        "category": "SkillCraft"
+      },
+      {
+        "command": "skillcraft.importSkill",
+        "title": "Import an Existing Skill",
+        "category": "SkillCraft",
+        "icon": "$(cloud-download)"
+      },
+      {
+        "command": "skillcraft.openOrchestrator",
+        "title": "Open Orchestrator",
+        "category": "SkillCraft",
+        "icon": "$(type-hierarchy)"
+      },
+      {
+        "command": "skillcraft.analyze",
+        "title": "Analyze Skill Health",
+        "category": "SkillCraft",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "skillcraft.coachReview",
+        "title": "Ask the Coach for a Review",
+        "category": "SkillCraft",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "skillcraft.syncFiles",
+        "title": "Sync Files with Workflow",
+        "category": "SkillCraft",
+        "icon": "$(sync)"
+      },
+      {
+        "command": "skillcraft.build",
+        "title": "Build Skill",
+        "category": "SkillCraft",
+        "icon": "$(package)"
+      },
+      {
+        "command": "skillcraft.install",
+        "title": "Install Built Skill",
+        "category": "SkillCraft",
+        "icon": "$(desktop-download)"
+      },
+      {
+        "command": "skillcraft.runTests",
+        "title": "Run Skill Tests",
+        "category": "SkillCraft",
+        "icon": "$(beaker)"
+      },
+      {
+        "command": "skillcraft.previewSkillMd",
+        "title": "Preview Generated SKILL.md",
+        "category": "SkillCraft",
+        "icon": "$(open-preview)"
+      },
+      {
+        "command": "skillcraft.chooseModel",
+        "title": "Choose AI Model",
+        "category": "SkillCraft"
+      },
+      {
+        "command": "skillcraft.setApiKey",
+        "title": "Set Anthropic API Key (fallback)",
+        "category": "SkillCraft"
+      },
+      {
+        "command": "skillcraft.proposal.preview",
+        "title": "Preview Changes",
+        "category": "SkillCraft",
+        "icon": "$(diff)"
+      },
+      {
+        "command": "skillcraft.proposal.accept",
+        "title": "Accept",
+        "category": "SkillCraft",
+        "icon": "$(check)"
+      },
+      {
+        "command": "skillcraft.proposal.reject",
+        "title": "Reject",
+        "category": "SkillCraft",
+        "icon": "$(close)"
+      },
+      {
+        "command": "skillcraft.proposal.acceptGroup",
+        "title": "Accept All in Group",
+        "category": "SkillCraft",
+        "icon": "$(check-all)"
+      },
+      {
+        "command": "skillcraft.proposal.why",
+        "title": "Why?",
+        "category": "SkillCraft",
+        "icon": "$(question)"
+      },
+      {
+        "command": "skillcraft.undo",
+        "title": "Undo Last Accepted Proposal",
+        "category": "SkillCraft",
+        "icon": "$(discard)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "skillcraft.openOrchestrator",
+          "when": "view == skillcraft.skills && skillcraft.hasProject",
+          "group": "navigation@1"
+        },
+        {
+          "command": "skillcraft.build",
+          "when": "view == skillcraft.skills && skillcraft.hasProject",
+          "group": "navigation@2"
+        },
+        {
+          "command": "skillcraft.analyze",
+          "when": "view == skillcraft.health",
+          "group": "navigation@1"
+        },
+        {
+          "command": "skillcraft.coachReview",
+          "when": "view == skillcraft.health && skillcraft.hasProject",
+          "group": "navigation@2"
+        },
+        {
+          "command": "skillcraft.undo",
+          "when": "view == skillcraft.proposals",
+          "group": "navigation@1"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "skillcraft.proposal.preview",
+          "when": "view == skillcraft.proposals && viewItem == proposal",
+          "group": "inline@1"
+        },
+        {
+          "command": "skillcraft.proposal.accept",
+          "when": "view == skillcraft.proposals && viewItem == proposal",
+          "group": "inline@2"
+        },
+        {
+          "command": "skillcraft.proposal.reject",
+          "when": "view == skillcraft.proposals && viewItem == proposal",
+          "group": "inline@3"
+        },
+        {
+          "command": "skillcraft.proposal.why",
+          "when": "view == skillcraft.proposals && viewItem == proposal",
+          "group": "1_info"
+        },
+        {
+          "command": "skillcraft.proposal.acceptGroup",
+          "when": "view == skillcraft.proposals && viewItem == proposalGroup",
+          "group": "inline@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "skillcraft.proposal.preview",
+          "when": "false"
+        },
+        {
+          "command": "skillcraft.proposal.accept",
+          "when": "false"
+        },
+        {
+          "command": "skillcraft.proposal.reject",
+          "when": "false"
+        },
+        {
+          "command": "skillcraft.proposal.acceptGroup",
+          "when": "false"
+        },
+        {
+          "command": "skillcraft.proposal.why",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "SkillCraft",
+      "properties": {
+        "skillcraft.model": {
+          "type": "string",
+          "default": "",
+          "description": "Preferred language model id (from VS Code's configured models). Leave empty to use the first available model."
+        },
+        "skillcraft.analyzeOnSave": {
+          "type": "boolean",
+          "default": true,
+          "description": "Re-run structure, integrity and efficiency checks whenever a skill file is saved."
+        },
+        "skillcraft.thresholds.skillMdLines": {
+          "type": "number",
+          "default": 500,
+          "description": "Warn when SKILL.md exceeds this many lines."
+        },
+        "skillcraft.thresholds.skillMdTokens": {
+          "type": "number",
+          "default": 5000,
+          "description": "Warn when the SKILL.md body is estimated to exceed this many tokens."
+        }
+      }
+    },
+    "jsonValidation": [
+      {
+        "fileMatch": "skillcraft.json",
+        "url": "./schemas/skillcraft.schema.json"
+      },
+      {
+        "fileMatch": "workflow.json",
+        "url": "./schemas/workflow.schema.json"
+      }
+    ],
+    "chatParticipants": [
+      {
+        "id": "skillcraft.chat",
+        "name": "skillcraft",
+        "fullName": "SkillCraft",
+        "description": "Create, improve and explain Agent Skills",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "new",
+            "description": "Create a new skill through a short conversation"
+          },
+          {
+            "name": "review",
+            "description": "Coach review of the current skill"
+          },
+          {
+            "name": "add",
+            "description": "Add a component to the workflow (as a proposal)"
+          },
+          {
+            "name": "explain",
+            "description": "Explain a health warning or how the skill works"
+          },
+          {
+            "name": "build",
+            "description": "Build the skill for its target tools"
+          }
+        ]
+      }
+    ],
+    "languageModelTools": [
+      {
+        "name": "skillcraft_validate",
+        "displayName": "Validate skill",
+        "toolReferenceName": "skillcraftValidate",
+        "canBeReferencedInPrompt": true,
+        "modelDescription": "Runs SkillCraft's structure, integrity, efficiency and portability checks on the Agent Skill in the current workspace and returns the findings.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "skillcraft_build",
+        "displayName": "Build skill",
+        "toolReferenceName": "skillcraftBuild",
+        "canBeReferencedInPrompt": true,
+        "modelDescription": "Builds the Agent Skill in the current workspace for its configured target tools (Claude, Codex, Copilot) into dist/, including README.md and per-tool SETUP.md.",
+        "inputSchema": {
+          "type": "object",
+          "properties": {}
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "typecheck": "tsc --noEmit -p . && tsc --noEmit -p webview",
+    "test": "node esbuild.mjs --tests && node --test out-test/*.test.js",
+    "icons": "node scripts/render-icons.mjs",
+    "package": "npm run build -- --production && vsce package --skip-license --allow-missing-repository --no-rewrite-relative-links"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.135.0",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "2.6.2",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "@types/vscode": "1.95.0",
+    "@vscode/codicons": "0.0.36",
+    "@vscode/vsce": "3.9.2",
+    "@xyflow/react": "12.12.0",
+    "esbuild": "0.28.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "5.9.3"
+  }
+}

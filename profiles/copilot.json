@@ -1,0 +1,23 @@
+{
+  "id": "copilot",
+  "displayName": "GitHub Copilot",
+  "profileVersion": "2026.10.1",
+  "verifiedAt": "2026-10-19",
+  "sources": ["https://code.visualstudio.com/docs/agent-customization/agent-skills", "https://docs.github.com/en/copilot/how-tos/use-copilot-agents/cloud-agent/create-skills"],
+  "install": {
+    "project": ".github/skills",
+    "user": "~/.copilot/skills"
+  },
+  "frontmatter": {
+    "required": ["name", "description"],
+    "supported": ["name", "description", "license", "compatibility", "metadata", "allowed-tools"]
+  },
+  "limits": { "descriptionChars": 1024, "skillMdLines": 500 },
+  "invoke": "Copilot (agent mode, CLI or cloud agent) loads it when the request matches the description.",
+  "mcp": {
+    "how": "Add the server to .vscode/mcp.json in the workspace (or your user MCP configuration).",
+    "snippet": "{\n  \"servers\": {\n    \"{server}\": { \"type\": \"http\", \"url\": \"{url}\" }\n  }\n}"
+  },
+  "runtimes": ["python3", "node", "bash"],
+  "extraFiles": []
+}

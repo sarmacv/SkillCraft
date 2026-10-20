@@ -1,0 +1,24 @@
+{
+  "id": "claude",
+  "displayName": "Claude Code",
+  "profileVersion": "2026.10.1",
+  "verifiedAt": "2026-10-19",
+  "sources": ["https://code.claude.com/docs/en/skills"],
+  "install": {
+    "project": ".claude/skills",
+    "user": "~/.claude/skills",
+    "plugin": "<plugin>/skills"
+  },
+  "frontmatter": {
+    "required": [],
+    "supported": ["name", "description", "when_to_use", "argument-hint", "arguments", "disable-model-invocation", "user-invocable", "allowed-tools", "disallowed-tools", "model", "effort", "context", "agent", "background", "hooks", "paths", "shell", "metadata", "license", "compatibility"]
+  },
+  "limits": { "descriptionChars": 1536, "skillMdLines": 500 },
+  "invoke": "Claude loads it automatically when the request matches the description, or type /{name}.",
+  "mcp": {
+    "how": "Add the server with the claude CLI, or commit a .mcp.json at the project root.",
+    "snippet": "claude mcp add --transport http {server} {url}"
+  },
+  "runtimes": ["python3", "node", "bash"],
+  "extraFiles": []
+}
