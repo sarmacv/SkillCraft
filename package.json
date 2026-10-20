@@ -5,6 +5,14 @@
   "version": "0.1.0",
   "publisher": "skillcraft",
   "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sarmacv/SkillCraft.git"
+  },
+  "homepage": "https://github.com/sarmacv/SkillCraft#readme",
+  "bugs": {
+    "url": "https://github.com/sarmacv/SkillCraft/issues"
+  },
   "icon": "media/icon.png",
   "galleryBanner": {
     "color": "#04342C",
@@ -359,7 +367,7 @@
     "typecheck": "tsc --noEmit -p . && tsc --noEmit -p webview",
     "test": "node esbuild.mjs --tests && node --test out-test/*.test.js",
     "icons": "node scripts/render-icons.mjs",
-    "package": "npm run build -- --production && vsce package --skip-license --allow-missing-repository --no-rewrite-relative-links"
+    "package": "npm run build -- --production && vsce package --skip-license"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "0.135.0",
